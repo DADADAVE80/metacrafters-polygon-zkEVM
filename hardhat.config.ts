@@ -2,6 +2,8 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 // https://github.com/projectsophon/hardhat-circom
 import "hardhat-circom";
+// environment variables
+require("dotenv").config();
 // circuits
 import circuits = require('./circuits.config.json')
 
@@ -12,6 +14,23 @@ process.env.BASE_PATH = __dirname;
 import "./tasks/newcircuit.ts"
 
 const config: HardhatUserConfig = {
+  networks: {
+    mumbai: {
+      url: process.env.MUMBAI_RPC_URL,
+      accounts: [`${process.env.PRIVATE_KEY}`],
+    },
+    goerli: {
+      url: process.env.GOERLI_RPC_URL,
+      accounts: [`${process.env.PRIVATE_KEY}`],
+    },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: [`${process.env.PRIVATE_KEY}`],
+    },
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
   solidity: {
     compilers: [
       {
